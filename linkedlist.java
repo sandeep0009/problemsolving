@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.*;
 
 class Node {
     int val;
@@ -79,12 +80,78 @@ public class linkedlist {
         return head;
     }
 
+    public static boolean isplaindrome(Node head){
+        Node slow=head;
+
+        boolean isplain=true;
+
+        Stack<Integer>res=new Stack<Integer>();
+
+        while(slow!=null){
+            res.push(slow.val);
+            slow=slow.left;
+        }
+
+        while(head!=null){
+            int i=res.pop();
+            if(head.val==i){
+                isplain=true;
+                
+
+            }
+            else{
+                isplain=false;
+            
+                break;
+            }
+            head=head.left;
+
+        }
+        return isplain;
+
+    }
+
+
+    public static boolean iscycle(Node head){
+        Node slow=head;
+        Node fast=head;
+      
+        while(fast!=null && fast.left!=null){
+          slow=slow.left;
+          fast=fast.left.left;
+          if(slow==fast){
+            return true;
+          }
+
+        }
+        return false;
+    }
+
+
+    public static Node cyclebreak(Node head){
+        if(!iscycle(head))return null;
+        Node slow=head;
+        Node fast=head;
+        Node prev=null;
+        while(slow!=fast){
+            prev=fast;
+            slow=slow.left;
+            fast=fast.left;
+
+        }
+        prev.left=null;
+        return head;
+
+
+         
+    }
+
     public static void main(String[] args) {
         Node head = new Node(5);
         insertAtend(head, 03);
         head=insetAtmiddle(head, 1, 3);
-        print(head);
-        head=delte(head, 0);
-        print(head);
+
+        System.out.println(iscycle(head));
+        
     }
 }
